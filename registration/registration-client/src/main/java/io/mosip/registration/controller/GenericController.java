@@ -1201,6 +1201,7 @@ public class GenericController extends BaseController {
 	            Thread.sleep(3000);
 
 	            PRNVerificationResponse verificationResponse = verifyPRN(prnText, processSpecFlow, registrationId);
+	            isPrnValid = verificationResponse.isValid();
 
 	            Platform.runLater(() -> {
 	                removeLoadingPRNIndicator(node);
@@ -1208,7 +1209,7 @@ public class GenericController extends BaseController {
 	                // Locate the existing PRN validation label inside the GridPane
 	                Label validationLabel = (Label) parentGridPane.lookup("#PRNengMessage");
 
-	                if (verificationResponse.isValid()) {
+	                if (isPrnValid) {
 	                	PRNVerificationResponse consumeResponse = consumePrnAsUsed(prnText, registrationId);
 	                    updatePRNIndicator(node, consumeResponse.isValid());
 	                    updatePRNValidationMessage(validationLabel, consumeResponse.getMessage(), consumeResponse.isValid());
